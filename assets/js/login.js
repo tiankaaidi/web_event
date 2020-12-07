@@ -48,7 +48,7 @@ $(function () {
       success: function (res) {
         console.log(res);
         if (res.status !== 0) {
-          return '登录失败！'
+          return layer.msg('登录失败！')
         }
         layer.msg('登录成功！')
         localStorage.setItem('token', res.token)
