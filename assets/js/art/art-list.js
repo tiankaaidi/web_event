@@ -1,9 +1,10 @@
 $(function () {
   var layer = layui.layer
   var form = layui.form
+  var laypage = layui.laypage;
   var q = {
     pagenum: 1,
-    pagesize: 100,
+    pagesize: 2,
     cate_id: '',
     state: ''
   }
@@ -19,6 +20,7 @@ $(function () {
         }
         let artList = template('cateList', res)
         $('tbody').html(artList)
+        renderPage(res.total)
       }
     });
   }
@@ -68,4 +70,23 @@ $(function () {
     // 根据最新的筛选条件，重新渲染表格的数据
     getArtList()
   })
+
+  function renderPage(total) {
+    laypage.render({
+      elem: 'pageBox',
+      count: total,
+      limit: q.pagesize,
+      curr: q.pagenum,
+      limits: [2, 4, 6, 10],
+      layout: ['count', 'limit', 'prev', 'page', 'next', 'skip'],
+      jump: function (obj, frist) {
+        q.pagesize = obj.limit
+        q.pagenum = obj.curr
+        if (!frist) {
+          getArtList()
+        }
+      }
+
+    })
+  }
 })
