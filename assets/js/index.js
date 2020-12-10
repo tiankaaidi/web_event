@@ -28,11 +28,11 @@ function renderAvatar(user) {
     var name = user.nickname || user.username
     $('.welcome').html('欢迎您&nbsp;&nbsp;' + name)
     if (user.user_pic !== null) {
-        $('.layui-nav-img').attr('src', user.pic).show()
+        $('.layui-nav-img').attr('src', user.user_pic).show()
         $('.text_hp').hide()
     } else {
-        var frist = user.username[0]
-        $('.text_hp').html(frist.toUpperCase()).show()
+        var frist = user.username[0].toUpperCase()
         $('.layui-nav-img').hide()
+        $('.text_hp').html(frist).show()
     }
 }
