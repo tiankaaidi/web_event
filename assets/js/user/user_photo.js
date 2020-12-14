@@ -32,15 +32,16 @@ $(function () {
       .cropper(options)
   })
 
-  var dataURL = $image
-    .cropper('getCroppedCanvas', {
-      // 创建一个 Canvas 画布
-      width: 100,
-      height: 100
-    })
-    .toDataURL('image/png')
+
 
   $('#determine').on('click', function () {
+    var dataURL = $image
+      .cropper('getCroppedCanvas', {
+        // 创建一个 Canvas 画布
+        width: 100,
+        height: 100
+      })
+      .toDataURL('image/png')
     $.ajax({
       method: 'POST',
       url: '/my/update/avatar',

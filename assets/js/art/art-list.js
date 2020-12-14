@@ -46,7 +46,6 @@ $(function () {
       method: 'GET',
       url: '/my/article/cates',
       success: function (res) {
-        console.log(res);
         if (res.status !== 0) {
           return layer.msg('获取文章分类失败！')
         }
@@ -86,7 +85,33 @@ $(function () {
           getArtList()
         }
       }
-
     })
   }
+
+  $('tbody').on('click', '.btn-delete', function () {
+    var id = $(this).attr('data-id')
+    var len = $('.btn-delete').length
+    console.log(id);
+    layer.confirm('确认删除?', { icon: 3, title: '提示' }, function (index) {
+      $.ajax({
+        method: 'GET',
+        url: '/my/article/delete/' + id,
+        success: function (res) {
+          if (res.status !== 0) {
+            return layer.msg('删除文章失败！')
+          }
+          layer.msg('删除文章成功！')
+          if (len === 1) {
+            // 如果 len 的值等于1，证明删除完毕之后，页面上就没有任何数据了
+            // 页码值最小必须是 1
+            q.pagenum = q.pagenum === 1 ? 1 : q.pagenum - 1
+          }
+          getArtList()
+        }
+      })
+
+      layer.close(index);
+    });
+
+  })
 })
